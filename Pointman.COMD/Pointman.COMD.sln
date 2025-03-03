@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Pointman.COMD", "Pointman.COMD\Pointman.COMD.esproj", "{AB804784-0F46-4342-8C62-29D5228FD7DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB804784-0F46-4342-8C62-29D5228FD7DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {45E1A928-57C7-4CA2-9A1D-7C0351AE162F}
+	EndGlobalSection
+EndGlobal
