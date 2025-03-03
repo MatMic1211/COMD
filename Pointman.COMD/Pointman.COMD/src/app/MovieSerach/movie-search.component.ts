@@ -23,11 +23,15 @@ interface Movie {
 export class MovieSearchComponent implements AfterViewInit {
   movies: Movie[] = [];
   filterTerm: string = '';
+  yearFilter: string = '';
+  genreFilter: string = '';
+  directorFilter: string = '';
+  plotFilter: string = '';
   isLoading: boolean = false;
   displayedColumns: string[] = ['Poster', 'Title', 'Year', 'Runtime', 'Genre', 'Director', 'Plot'];
   dataSource = new MatTableDataSource<Movie>(this.movies);
 
-  @ViewChild(MatSort) sort!: MatSort; // Non-null assertion
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private movieService: MovieService) { }
 
@@ -37,14 +41,25 @@ export class MovieSearchComponent implements AfterViewInit {
 
   onSearch(): void {
     this.isLoading = true;
-    this.movieService.searchMovies(this.filterTerm).subscribe(
+    this.movieService.searchMovies(
+      this.filterTerm,
+      this.yearFilter,
+      this.genreFilter,
+      this.directorFilter,
+      this.plotFilter
+    ).subscribe(
       (movies: Movie[]) => {
-        this.movies = movies;
-        this.dataSource.data = movies; 
+        this.movies = movies.filter(movie =>
+          (!this.yearFilter || movie.Year === this.yearFilter) &&
+          (!this.genreFilter || movie.Genre.toLowerCase().includes(this.genreFilter.toLowerCase())) &&
+          (!this.directorFilter || movie.Director.toLowerCase().includes(this.directorFilter.toLowerCase())) &&
+          (!this.plotFilter || movie.Plot.toLowerCase().includes(this.plotFilter.toLowerCase()))
+        );
+        this.dataSource.data = this.movies;
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
-        console.error('Error occurred:', error);
+        console.error('Błąd:', error);
         this.isLoading = false;
       }
     );

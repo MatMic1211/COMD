@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 interface Movie {
   Title: string;
@@ -23,10 +23,24 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  searchMovies(searchTerm: string): Observable<Movie[]> {
-    const params = new HttpParams()
-      .set('apikey', this.apiKey)
-      .set('s', searchTerm);
+  searchMovies(
+    searchTerm: string,
+    year?: string,
+    genre?: string,
+    director?: string,
+    plot?: string
+  ): Observable<Movie[]> {
+    let params = new HttpParams().set('apikey', this.apiKey);
+
+    if (searchTerm) {
+      params = params.set('s', searchTerm);
+    }
+    if (year) {
+      params = params.set('y', year);
+    }
+    if (genre) {
+      params = params.set('genre', genre);
+    }
 
     return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, { params }).pipe(
       switchMap(response => {
