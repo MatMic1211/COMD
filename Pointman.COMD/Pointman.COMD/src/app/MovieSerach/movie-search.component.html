@@ -1,28 +1,8 @@
 <div class="search-container">
   <div class="filters-container">
     <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
+      <mat-label>Search for movie</mat-label>
       <input matInput [(ngModel)]="filterTerm" (input)="onSearch()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Year</mat-label>
-      <input matInput [(ngModel)]="yearFilter" (input)="onSearch()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Genre</mat-label>
-      <input matInput [(ngModel)]="genreFilter" (input)="onSearch()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Director</mat-label>
-      <input matInput [(ngModel)]="directorFilter" (input)="onSearch()" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Plot</mat-label>
-      <input matInput [(ngModel)]="plotFilter" (input)="onSearch()" />
     </mat-form-field>
   </div>
 
@@ -70,7 +50,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"></mat-paginator>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" aria-label="Select page"></mat-paginator>
 
   <p *ngIf="!isLoading && movies.length === 0" class="no-results">No results found.</p>
 </div>

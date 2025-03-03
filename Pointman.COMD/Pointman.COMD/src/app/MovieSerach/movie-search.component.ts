@@ -4,6 +4,8 @@ import { MovieService } from '../Services/movie-service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 interface Movie {
   Title: string;
@@ -24,13 +26,11 @@ interface Movie {
 export class MovieSearchComponent implements AfterViewInit {
   movies: Movie[] = [];
   filterTerm: string = '';
-  yearFilter: string = '';
-  genreFilter: string = '';
-  directorFilter: string = '';
-  plotFilter: string = '';
   isLoading: boolean = false;
   displayedColumns: string[] = ['Poster', 'Title', 'Year', 'Runtime', 'Genre', 'Director', 'Plot'];
   dataSource = new MatTableDataSource<Movie>(this.movies);
+
+  private filterSubject: Subject<string> = new Subject<string>();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,32 +40,27 @@ export class MovieSearchComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+
+    this.filterSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.movieService.searchMovies(term))
+    ).subscribe(
+      (movies: Movie[]) => {
+        this.movies = movies;
+        this.dataSource.data = this.movies;
+        this.dataSource.paginator = this.paginator;
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Błąd:', error);
+        this.isLoading = false;
+      }
+    );
   }
 
   onSearch(): void {
     this.isLoading = true;
-    this.movieService.searchMovies(
-      this.filterTerm,
-      this.yearFilter,
-      this.genreFilter,
-      this.directorFilter,
-      this.plotFilter
-    ).subscribe(
-      (movies: Movie[]) => {
-        this.movies = movies.filter(movie =>
-          (!this.yearFilter || movie.Year === this.yearFilter) &&
-          (!this.genreFilter || movie.Genre.toLowerCase().includes(this.genreFilter.toLowerCase())) &&
-          (!this.directorFilter || movie.Director.toLowerCase().includes(this.directorFilter.toLowerCase())) &&
-          (!this.plotFilter || movie.Plot.toLowerCase().includes(this.plotFilter.toLowerCase()))
-        );
-        this.dataSource.data = this.movies;
-        this.dataSource.paginator = this.paginator;
-        this.isLoading = false;  
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Błąd:', error);
-        this.isLoading = false;  
-      }
-    );
+    this.filterSubject.next(this.filterTerm);
   }
 }
