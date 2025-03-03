@@ -1,0 +1,33 @@
+<div class="search-container">
+  <input [(ngModel)]="filterTerm" (input)="onSearch()" placeholder="Search Movies..." />
+
+
+  <app-movie-loader *ngIf="isLoading"></app-movie-loader>
+
+  <table *ngIf="!isLoading && movies.length > 0">
+    <thead>
+      <tr>
+        <th>Poster</th>
+        <th>Title</th>
+        <th>Year</th>
+        <th>Runtime</th>
+        <th>Genre</th>
+        <th>Director</th>
+        <th>Plot</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movie of movies">
+        <td><img [src]="movie.Poster" alt="{{ movie.Title }}" width="50" height="75" /></td>
+        <td>{{ movie.Title }}</td>
+        <td>{{ movie.Year }}</td>
+        <td>{{ movie.Runtime }}</td>
+        <td>{{ movie.Genre }}</td>
+        <td>{{ movie.Director }}</td>
+        <td>{{ movie.Plot }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && movies.length === 0">No results found.</p>
+</div>

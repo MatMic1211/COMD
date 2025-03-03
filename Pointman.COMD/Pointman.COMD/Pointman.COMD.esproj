@@ -8,6 +8,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\Pointman.COMD\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app\Services\" />
+    <Folder Include="src\app\MovieSerach\" />
+    <Folder Include="src\app\MovieLoader\" />
   </ItemGroup>
 </Project>
