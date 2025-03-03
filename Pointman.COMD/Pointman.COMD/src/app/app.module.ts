@@ -5,6 +5,11 @@ import { AppComponent } from './app.component';
 import { MovieSearchComponent } from './MovieSerach/movie-search.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
 
 @NgModule({
@@ -17,7 +22,11 @@ import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MovieLoaderComponent,  
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MovieLoaderComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

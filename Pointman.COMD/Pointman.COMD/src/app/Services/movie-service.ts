@@ -18,7 +18,6 @@ interface Movie {
   providedIn: 'root'
 })
 export class MovieService {
-
   private apiUrl = 'https://www.omdbapi.com/';
   private apiKey = '1c4a41da';
 
@@ -29,14 +28,13 @@ export class MovieService {
       .set('apikey', this.apiKey)
       .set('s', searchTerm);
 
-    return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, { params })
-      .pipe(
-        switchMap(response => {
-          if (!response.Search) return [];
-          const movieDetailsRequests = response.Search.map(movie => this.getMovieDetails(movie.imdbID));
-          return forkJoin(movieDetailsRequests);
-        })
-      );
+    return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, { params }).pipe(
+      switchMap(response => {
+        if (!response.Search) return [];
+        const movieDetailsRequests = response.Search.map(movie => this.getMovieDetails(movie.imdbID));
+        return forkJoin(movieDetailsRequests);
+      })
+    );
   }
 
   private getMovieDetails(imdbID: string): Observable<Movie> {
