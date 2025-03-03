@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MovieService } from '../Services/movie-service';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 interface Movie {
@@ -32,11 +33,13 @@ export class MovieSearchComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Movie>(this.movies);
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private movieService: MovieService) { }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   onSearch(): void {
@@ -56,6 +59,7 @@ export class MovieSearchComponent implements AfterViewInit {
           (!this.plotFilter || movie.Plot.toLowerCase().includes(this.plotFilter.toLowerCase()))
         );
         this.dataSource.data = this.movies;
+        this.dataSource.paginator = this.paginator; 
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
