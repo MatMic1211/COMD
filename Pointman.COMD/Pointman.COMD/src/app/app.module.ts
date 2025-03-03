@@ -27,7 +27,8 @@ import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
     MatInputModule,
     MatSortModule,
     MovieLoaderComponent,
-    MatPaginatorModule
+    MatPaginatorModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

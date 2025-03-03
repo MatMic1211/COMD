@@ -59,12 +59,12 @@ export class MovieSearchComponent implements AfterViewInit {
           (!this.plotFilter || movie.Plot.toLowerCase().includes(this.plotFilter.toLowerCase()))
         );
         this.dataSource.data = this.movies;
-        this.dataSource.paginator = this.paginator; 
-        this.isLoading = false;
+        this.dataSource.paginator = this.paginator;
+        this.isLoading = false;  
       },
       (error: HttpErrorResponse) => {
         console.error('Błąd:', error);
-        this.isLoading = false;
+        this.isLoading = false;  
       }
     );
   }
