@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 interface Movie {
   Title: string;
@@ -28,6 +29,7 @@ export class MovieSearchComponent implements AfterViewInit {
   filterTerm: string = '';
   isLoading: boolean = false;
   displayedColumns: string[] = ['Poster', 'Title', 'Year', 'Runtime', 'Genre', 'Director', 'Plot'];
+
   dataSource = new MatTableDataSource<Movie>(this.movies);
 
   private filterSubject: Subject<string> = new Subject<string>();
@@ -61,6 +63,12 @@ export class MovieSearchComponent implements AfterViewInit {
 
   onSearch(): void {
     this.isLoading = true;
+
+    this.filterTerm = this.filterTerm.trim();
     this.filterSubject.next(this.filterTerm);
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
   }
 }

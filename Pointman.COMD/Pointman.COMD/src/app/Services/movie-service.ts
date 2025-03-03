@@ -33,9 +33,9 @@ export class MovieService {
     let params = new HttpParams().set('apikey', this.apiKey);
 
     if (searchTerm) {
-      params = params.set('s', searchTerm);
-    } else if (year) {
 
+      params = params.set('s', encodeURIComponent(searchTerm));
+    } else if (year) {
       return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, {
         params: new HttpParams().set('apikey', this.apiKey).set('y', year).set('s', 'movie'),
       }).pipe(

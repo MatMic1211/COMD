@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
     MatSortModule,
     MovieLoaderComponent,
     MatPaginatorModule,
+    DragDropModule
 
   ],
   providers: [],
