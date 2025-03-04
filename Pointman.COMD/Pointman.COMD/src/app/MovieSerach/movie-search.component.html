@@ -50,13 +50,12 @@
           </ng-container>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
   </div>
 
-  <mat-paginator [pageSize]="10"  aria-label="Select page"></mat-paginator>
-
+  <mat-paginator [pageSize]="10" aria-label="Select page"></mat-paginator>
   <p *ngIf="!isLoading && movies.length === 0" class="no-results">No results found.</p>
 </div>

@@ -23,29 +23,14 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  searchMovies(
-    searchTerm?: string,
-    year?: string,
-    genre?: string,
-    director?: string,
-    plot?: string
-  ): Observable<Movie[]> {
+  searchMovies(searchTerm: string): Observable<Movie[]> {
     let params = new HttpParams().set('apikey', this.apiKey);
 
-    if (searchTerm) {
+    if (!isNaN(Number(searchTerm))) {
 
+      params = params.set('y', searchTerm).set('s', 'movie');
+    } else {
       params = params.set('s', encodeURIComponent(searchTerm));
-    } else if (year) {
-      return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, {
-        params: new HttpParams().set('apikey', this.apiKey).set('y', year).set('s', 'movie'),
-      }).pipe(
-        switchMap(response => {
-          if (!response.Search) return of([]);
-          const movieDetailsRequests = response.Search.map(movie => this.getMovieDetails(movie.imdbID));
-          return forkJoin(movieDetailsRequests);
-        }),
-        catchError(() => of([]))
-      );
     }
 
     return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, { params }).pipe(
