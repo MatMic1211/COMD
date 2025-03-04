@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, of, throwError } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 
-interface Movie {
+export interface Movie {
   Title: string;
   Year: string;
   Runtime: string;
