@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MovieLoaderComponent } from './MovieLoader/movie-loader.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSortModule,
     MovieLoaderComponent,
     MatPaginatorModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressSpinnerModule 
 
   ],
   providers: [],
