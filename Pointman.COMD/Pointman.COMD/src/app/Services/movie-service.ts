@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of, throwError } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 
 interface Movie {
@@ -19,19 +19,15 @@ interface Movie {
 })
 export class MovieService {
   private apiUrl = 'https://www.omdbapi.com/';
-  private apiKey = '1c4a41da';
+  private apiKey = 'f54c3658';
 
   constructor(private http: HttpClient) { }
 
   searchMovies(searchTerm: string): Observable<Movie[]> {
     let params = new HttpParams().set('apikey', this.apiKey);
 
-    if (!isNaN(Number(searchTerm))) {
-
-      params = params.set('y', searchTerm).set('s', 'movie');
-    } else {
-      params = params.set('s', encodeURIComponent(searchTerm));
-    }
+    params = params.set('y', searchTerm);
+    params = params.set('s', encodeURIComponent(searchTerm));
 
     return this.http.get<{ Search: { imdbID: string }[] }>(this.apiUrl, { params }).pipe(
       switchMap(response => {
@@ -39,7 +35,11 @@ export class MovieService {
         const movieDetailsRequests = response.Search.map(movie => this.getMovieDetails(movie.imdbID));
         return forkJoin(movieDetailsRequests);
       }),
-      catchError(() => of([]))
+      catchError(error => {
+        console.error('Błąd podczas pobierania wyników:', error);
+        return throwError(error);
+      })
+
     );
   }
 

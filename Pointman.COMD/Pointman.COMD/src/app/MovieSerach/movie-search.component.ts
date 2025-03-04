@@ -71,4 +71,4 @@ export class MovieSearchComponent implements AfterViewInit {
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
   }
-}
+}  
